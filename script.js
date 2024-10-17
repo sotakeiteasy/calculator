@@ -21,7 +21,9 @@ function operate(components) {
       if (operator === '*') result *= nextNumber;
       if (operator === '/') result /= nextNumber;
     }
-    return Math.round(result * 10000000) / 10000000;
+    result = Math.round(result * 10000000) / 10000000;
+    return Math.min(result, 999999999);
+
 }
 
 
@@ -38,7 +40,7 @@ btn.forEach(btn => {
 
         
         if(hasNumbers){
-            if(display.textContent === '0'){
+            if(display.textContent === '0' || displayContent === 'ERROR'){
                 expression = input;
                 displayContent = input;
                 display.textContent = displayContent;
@@ -58,16 +60,22 @@ btn.forEach(btn => {
                 lastInputType = 'operator';
             }else if(lastInputType === 'operator'){
                 expression = expression.slice(0, -1) + input;
-                console.log(expression)
             }else{
                 console.log('Invalid input: Cannot start or repeat operator without number');
             }
+
         } else if(isEqualSign){
-            if(lastInputType === 'number'){
-                const splitExpression = splitExpressionUsingMatch(expression);
-                displayContent = operate(splitExpression);
-                expression = operate(splitExpression);
-                display.textContent = displayContent
+            if(lastInputType === 'number' && /[+\-*/]/.test(expression)){
+                if(expression.endsWith("/0")){
+                    displayContent = "ERROR";
+                    display.textContent = displayContent
+                }else{
+                    const splitExpression = splitExpressionUsingMatch(expression);
+                    displayContent = operate(splitExpression);
+                    expression = operate(splitExpression);
+                    display
+                    .textContent = displayContent
+                }
             }else{
                 
             }
