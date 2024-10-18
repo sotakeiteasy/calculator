@@ -1,92 +1,115 @@
 const btnClear = document.querySelector('#clearButton');
 const btnResult = document.querySelector('#resultButton');
-const btn = document.querySelectorAll('.button')
+const btnNumber = document.querySelectorAll('.number');
+const btnOperator = document.querySelectorAll('.operator');
+
 const display = document.querySelector('#display');
 
 
-function splitExpressionUsingMatch(expr) {
-    expr = expr.replace(/\s+/g, '');
-    return expr.match(/(\d+\.?\d*|[+\-*/])/g);
-}
   
-function operate(components) {
-    let result = parseFloat(components[0]);
-    
-    for (let i = 1; i < components.length; i += 2) {
-      const operator = components[i];
-      const nextNumber = parseFloat(components[i + 1]);
-  
-      if (operator === '+') result += nextNumber;
-      if (operator === '-') result -= nextNumber;
-      if (operator === '*') result *= nextNumber;
-      if (operator === '/') result /= nextNumber;
-    }
-    result = Math.round(result * 10000000) / 10000000;
+function operate(a, oper, b) {
+    a = parseInt(a)
+    b = parseInt(b)
+
+    console.log('operate')
+      if (oper === '+') a += b;
+      if (oper === '-') a -= b;
+      if (oper === '*') a *= b;
+      if (oper === '/') a /= b;
+    result = Math.round(a * 10000000) / 10000000;
+    console.log(result)
     return Math.min(result, 999999999);
-
 }
 
+console.log(btnNumber);
 
-let expression = ''; // Full expression for evaluation
-let lastInputType = ''; // Tracks the last type of input: 'number' or 'operator'
 let displayContent = '';
 
-btn.forEach(btn => {
+let numberOne = ''; 
+let numberTwo = ''; 
+let operator = '';
+
+
+btnNumber.forEach(btn => {
     btn.addEventListener('click', (event) => {
         const input = event.target.textContent;
-        const hasNumbers = /[0-9]/.test(input); // Checks for digits (0-9)
-        const hasOperators = /[+\-*/]/.test(input); // Checks for operators (+, -, *, /)
-        const isEqualSign = /=/.test(input); // Checks for the equals sign
-
-        
-        if(hasNumbers){
+        if(operator === '') {
             if(display.textContent === '0' || displayContent === 'ERROR'){
-                expression = input;
+                numberOne = input;
                 displayContent = input;
                 display.textContent = displayContent;
-                lastInputType = 'number';
-            }else if(displayContent.length >= 9){
+            }else if(displayContent.length >= 9 || displayContent.length == undefined){
+
             }else{
-                expression += input;
+                numberOne += input;
                 displayContent += input;
                 display.textContent = displayContent;
-                lastInputType = 'number';
             }
-        } else if (hasOperators) {
-            if(lastInputType === 'number') {
-                expression += input;
-                displayContent = ''
-                display.textContent += displayContent;
-                lastInputType = 'operator';
-            }else if(lastInputType === 'operator'){
-                expression = expression.slice(0, -1) + input;
-            }else{
-                console.log('Invalid input: Cannot start or repeat operator without number');
-            }
+        }else {
+            if(display.textContent === '0'){
+                numberTwo = input;
+                displayContent = input;
+                display.textContent = displayContent;
+            }else if(displayContent.length >= 9 || displayContent.length == undefined){
 
-        } else if(isEqualSign){
-            if(lastInputType === 'number' && /[+\-*/]/.test(expression)){
-                if(expression.endsWith("/0")){
-                    displayContent = "ERROR";
-                    display.textContent = displayContent
-                }else{
-                    const splitExpression = splitExpressionUsingMatch(expression);
-                    displayContent = operate(splitExpression);
-                    expression = operate(splitExpression);
-                    display
-                    .textContent = displayContent
-                }
             }else{
-                
+                numberTwo += input;
+                displayContent += input;
+                display.textContent = displayContent;
             }
-            
         }
+    })
+});
+
+btnOperator.forEach(btn => {
+    btn.addEventListener('click', (event) => {
+        const input = event.target.textContent;
+        if(numberTwo === '' && operator === '') {
+            operator = input;
+            displayContent = '';
+            display.textContent += displayContent;
+
+        }else if(numberTwo !== '' && operator !== ''){
+            displayContent = operate(numberOne, operator, numberTwo);
+            display.textContent = displayContent;
+            numberOne = displayContent;
+            operator = ''
+            numberTwo = ''
+
+        }else if(numberTwo === '' && operator !== ''){
+            operator = input;
+
+        }else{
+            console.log('Invalid input: Cannot start or repeat operator without number');
+        };
     });
+});
+
+btnResult.addEventListener('click', () => {
+    if(numberOne !== '' && numberTwo !== '' && operator !== ''){
+        if(operator === '/' && numberTwo === '0'){
+            displayContent = "ERROR";
+            numberOne = ''
+            operator = ''
+            numberTwo = ''
+            display.textContent = displayContent
+        }else{
+            displayContent = operate(numberOne, operator, numberTwo);
+            display.textContent = displayContent;
+            numberOne = displayContent;
+            operator = ''
+            numberTwo = ''
+        };
+    }else{
+        return;
+    }
 });
 
 
 btnClear.addEventListener('click', () => {
     display.textContent = "";
     displayContent = '';
-    expression = "";
+    numberOne = ''
+    operator = ''
+    numberTwo = ''
 });
