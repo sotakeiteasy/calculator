@@ -4,78 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <style>
-    * {
-    box-sizing: content-box;
-    }
-
-    body{
-        display: flex;
-        flex-direction: column;
-        margin: 0;
-        padding: 0;
-    }
-
-    #calculator {
-    display: flex;
-    align-self: center;
-    flex-direction: column;
-    /* justify-self: center; */
-    width: 400px;
-    height: 470px;
-    background-color: #faf0ca;
-    padding: 2px;
-    border: 10px solid #0d3b66;
-    border-radius: 3px;
-    }
-
-    #buttonsPanel {
-        display: flex;
-        justify-content: center;
-    }
-
-    #numbers, #operators {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .row{
-        display:flex;
-        margin-right: 2px;
-    }
-
-    .button {
-        width: 80px;
-        height: 80px;
-        border-radius: 5px;
-        cursor: pointer;
-        font-weight: bold;
-        text-transform: uppercase;
-        margin: 1px;
-        font-size: large;
-    }
-
-    #display {
-        display: flex;
-        flex: 1 0 auto;
-        justify-content: flex-end;
-        align-self: center;
-        align-items: center;
-        width: 95%;
-        background-color: rgb(223, 222, 222);
-        margin: 5px;
-        padding-right: 5px;
-        border: 1px solid #ccc;
-        font-size: 5em;
-        text-align: center;
-
-    }
-
-    .button {
-        background-color: #f4d35e;
-    }
-
-    </style>
+    <link rel = "stylesheet" href="style.css">
 </head>
 <body>
     <div id = 'calculator'>
@@ -83,32 +12,37 @@
         <div id = 'display'></div>
         <div id = 'buttonsPanel'>
             <div id = 'numbers'>
-                <div class = 'row'>
-                    <button class = 'button number' id = 'one'>1</button>
-                    <button class = 'button number' id = 'two'>2</button>
-                    <button class = 'button number' id = 'three'>3</button>
-                </div>
-                <div class = 'row'>
-                    <button class = 'button number' id = 'four'>4</button>
-                    <button class = 'button number' id = 'five'>5</button>
-                    <button class = 'button number' id = 'six'>6</button>
-                </div>
-                <div class = 'row'>
-                    <button class = 'button number' id = 'seven'>7</button>
-                    <button class = 'button number' id = 'eight'>8</button>
-                    <button class = 'button number' id = 'nine'>9</button>
-                </div>
-                <div class = 'row'>
+                <div class='row'>
                     <button class = 'button' id = 'clearButton'>C</button>
+                    <button class = 'button' id = 'back'> back</button>
+                </div>
+                <div class='row'>
+                    <button class='button number' id='seven'>7</button>
+                    <button class='button number' id='eight'>8</button>
+                    <button class='button number' id='nine'>9</button>
+                </div>
+                <div class='row'>
+                    <button class='button number' id='four'>4</button>
+                    <button class='button number' id='five'>5</button>
+                    <button class='button number' id='six'>6</button>
+                </div>
+                <div class='row'>
+                    <button class='button number' id='one'>1</button>
+                    <button class='button number' id='two'>2</button>
+                    <button class='button number' id='three'>3</button>
+                </div>
+                <div class = 'row'>
+                    <button class = 'button' id = 'sign'>+/-</button>
                     <button class = 'button number' id = 'zero'>0</button>
-                    <button class = 'button' id = 'resultButton'>=</button>
-                </div>               
+                    <button class = 'button' id = 'decimal'>.</button>
+                </div>           
             </div>
             <div id = 'operators'>
-                <button class = 'button operator' id = 'add'>+</button>
-                <button class = 'button operator' id = 'subtract'>-</button>
-                <button class = 'button operator' id = 'multiply'>*</button>
                 <button class = 'button operator' id = 'divide'>/</button>
+                <button class = 'button operator' id = 'multiply'>*</button>
+                <button class = 'button operator' id = 'subtract'>-</button>
+                <button class = 'button operator' id = 'add'>+</button>
+                <button class = 'button' id = 'resultButton'>=</button>
             </div>
         </div>
     </div>
