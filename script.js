@@ -179,7 +179,7 @@ const keyMap = {
     '+': 'add',
     '*': 'multiply',
     '/': 'divide',
-    '=': 'resultButton',
+    // '=': 'resultButton',
     'Enter': 'resultButton',
     '.': 'decimal',
     'Escape': 'clearButton',
